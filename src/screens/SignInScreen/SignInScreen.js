@@ -5,6 +5,7 @@ import {
   StyleSheet,
   useWindowDimensions,
   ScrollView,
+  TextInput,
 } from 'react-native';
 import React, {useState} from 'react';
 import Logo from '../../../assets/img/logo.png';
@@ -12,6 +13,7 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import SocialMediaButtons from '../../components/SocialMediaButtons';
 import {useNavigation} from '@react-navigation/native';
+import {useForm, Controller} from 'react-hook-form';
 
 const SignInScreen = () => {
   const [username, setUsername] = useState('');
@@ -19,7 +21,15 @@ const SignInScreen = () => {
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
 
-  const onSignInPress = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm();
+
+  // console.log(errors);
+  const onSignInPressed = data => {
+    // console.log(data);
     //validate user
     navigation.navigate('Home');
   };
@@ -41,19 +51,31 @@ const SignInScreen = () => {
         />
 
         <CustomInput
+          name="username"
           placeholder="Username"
-          value={username}
-          setValue={setUsername}
+          control={control}
+          rules={{required: 'Username is required'}}
         />
 
         <CustomInput
+          name="password"
           placeholder="Password"
-          value={password}
-          setValue={setPassword}
           secureTextEntry={true}
+          control={control}
+          rules={{
+            required: 'Password is required',
+            minLength: {
+              value: 5,
+              message: 'Password should be minimum 5 characters long'
+            },
+          }}
         />
 
-        <CustomButton onPress={onSignInPress} text="Sign In" type="PRIMARY" />
+        <CustomButton
+          onPress={handleSubmit(onSignInPressed)}
+          text="Sign In"
+          type="PRIMARY"
+        />
         <CustomButton
           onPress={onForgotPasswordPress}
           text="Forgot Password?"
