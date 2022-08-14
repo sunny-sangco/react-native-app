@@ -1,15 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import  SignInScreen from './src/screens/SignInScreen'
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
 
-export default function App() {
+import React from 'react';
+import Navigation from './src/navigation';
+import SignUpScreen from './src/screens/SignUpScreen';
+
+
+const App = () => {
   return (
-    <View style={styles.container}>
-     <SignInScreen/>
-    </View>
+   <Navigation/>
   );
-}
+};
 
-const styles = StyleSheet.create({
- 
-});
+export default App;
