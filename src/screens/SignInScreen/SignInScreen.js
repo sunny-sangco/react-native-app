@@ -13,11 +13,10 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import SocialMediaButtons from '../../components/SocialMediaButtons';
 import {useNavigation} from '@react-navigation/native';
-import {useForm, Controller} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 
 const SignInScreen = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
 
@@ -29,7 +28,7 @@ const SignInScreen = () => {
 
   // console.log(errors);
   const onSignInPressed = data => {
-    // console.log(data);
+    console.log(data);
     //validate user
     navigation.navigate('Home');
   };
@@ -65,7 +64,7 @@ const SignInScreen = () => {
           rules={{
             required: 'Password is required',
             minLength: {
-              value: 5,
+              value: 8,
               message: 'Password should be minimum 5 characters long'
             },
           }}

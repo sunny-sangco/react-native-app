@@ -9,51 +9,63 @@ import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import {useNavigation} from '@react-navigation/native';
+import {useForm} from 'react-hook-form';
 
 const ConfirmEmailScreen = () => {
   const [code, setCode] = useState("");
+
+  const {control, handleSubmit, watch} = useForm();
+
   const navigation = useNavigation();
 
   const onConfirmPressed = () => {
     navigation.navigate('Home');
   };
 
-  const onBackToSignInPressed = () => {
-   navigation.navigate('SignIn');
+  const onSignInPressed = () => {
+    navigation.navigate('SignIn');
   };
 
-  const onResendCodePressed = () => {
+  const onResendPressed = async () => {
     console.warn("onResendCodePressed");
   };
-  
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
         <Text style={styles.title}>Confirm your email</Text>
 
         <CustomInput
+          name="username"
+          control={control}
+          placeholder="Username"
+          rules={{
+            required: 'Username code is required',
+          }}
+        />
+
+        <CustomInput
+          name="code"
+          control={control}
           placeholder="Enter your confirmation code"
-          value={code}
-          setValue={setCode}
+          rules={{
+            required: 'Confirmation code is required',
+          }}
         />
 
-        <CustomButton
-          onPress={onConfirmPressed}
-          text="Confirm"
-          type="PRIMARY"
-        />
+        <CustomButton text="Confirm" onPress={handleSubmit(onConfirmPressed)} type="PRIMARY" />
 
         <CustomButton
-          onPress={onResendCodePressed}
-          text="Resend Code"
+          text="Resend code"
+          onPress={onResendPressed}
           type="SECONDARY"
         />
 
         <CustomButton
-          onPress={onBackToSignInPressed}
-          text="Back to Sign In"
+          text="Back to Sign in"
+          onPress={onSignInPressed}
           type="TERTIARY"
         />
+
       </View>
     </ScrollView>
   );
